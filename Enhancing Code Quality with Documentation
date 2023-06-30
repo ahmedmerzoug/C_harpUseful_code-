@@ -1,0 +1,117 @@
+Source : https://www.c-sharpcorner.com/article/enhancing-code-quality-with-documentation-in-c-sharp/ 
+
+
+The summary Tag is enclosed within triple forward slashes (///) and placed directly above the class, method, property, or any other code member.
+
+/// <summary>
+/// This is a summary
+/// </summary>
+
+The <returns> Tag : 
+
+/// <summary>
+/// Gets the total number of mobile devices.
+/// </summary>
+/// <returns>The total number of mobile devices.</returns>
+public static int GetTotalMobileCount()
+{
+    return totalMobiles;
+}
+
+The <param> Tag : 
+/// <summary>
+/// Initializes a new instance of the <see cref="Mobile"/> class with the specified _manufacturer and _model.
+/// </summary>
+/// <param name="manufacturer">The _manufacturer of the mobile device.</param>
+/// <param name="model">The _model of the mobile device.</param>
+public Mobile(string manufacturer, string model)
+{
+    this._manufacturer = manufacturer;
+    this._model = model;
+    totalMobiles++;
+}
+
+The <exception> Tag : 
+/// <summary>
+/// Charges the mobile device by increasing the battery level.
+/// </summary>
+/// <param name="chargingPercentage">The percentage of mobile battery to charge.</param>
+/// <exception cref="ArgumentOutOfRangeException">Thrown when the charging percentage is less than or equal to zero.</exception>
+/// <exception cref="InvalidOperationException">Thrown when the battery level exceeds the maximum level.</exception>
+public void ChargeMobile(int chargingPercentage)
+{
+   if (chargingPercentage <= 0)
+   {
+       throw new InvalidOperationException("Charging percentage must be greater than zero.");
+   }
+
+    _batteryLevel += chargingPercentage;
+
+    // Ensure the battery level does not exceed the maximum level.
+    if (_batteryLevel > MaxBatteryLevel)
+    {
+        throw new InvalidOperationException("Battery level has reached the maximum level.");
+    }
+}
+
+
+The <example> Tag :
+/// <summary>
+/// Resets the battery level of the mobile device to zero.
+/// </summary>
+/// <example>
+/// <code>
+/// Mobile iPhone13= new Mobile("Apple", "iPhone13");
+/// iPhone13.ChargeMobile(88);
+/// Console.WriteLine(iPhone13.BatteryLevel); // Output: 88
+/// iPhone13.ResetBatteryLevel();
+/// Console.WriteLine(iPhone13.BatteryLevel); // Output: 0
+/// </code>
+/// </example>
+public void ResetBatteryLevel()
+{
+    _batteryLevel = 0;
+}
+
+
+The <remarks> Tag : 
+This tag is used to provide additional comments or information that helps developers understand the code better. For example, it can explain validation rules or provide specific details about a property. In following listing 6, I've incorporated the remarks in the class Mobile and ResetBatteryLevel() method.
+/// <summary>
+...
+/// </summary>
+/// <remarks>
+/// This class provides properties and methods to interact with a mobile device.
+/// </remarks>
+public class Mobile
+{
+
+    /// <summary>
+    ...
+    /// </summary>
+    /// <remarks>
+    /// This method should be used with caution as it will completely drain the battery of the mobile device.
+    /// It is recommended to charge the device immediately after resetting the battery level to avoid complete shutdown.
+    /// </remarks>
+    public void ResetBatteryLevel()
+    {
+       _batteryLevel = 0;
+    }
+}
+
+The <seealso> Tag : 
+This tag is used to provide references or links to other parts of the code, aiding in easier navigation for developers and allowing them to quickly access related code elements. It is important to note that the <seealso> tag should be written as <seealso cref=""/> to create a cross-reference to another code element.
+/// <summary>
+/// Sends an email to the specified recipient.
+/// </summary>
+/// <param name="recipient">The recipient's email address.</param>
+/// <param name="subject">The subject of the email.</param>
+/// <param name="body">The body content of the email.</param>
+/// <seealso cref="SendMessage(string, string)"/>
+public void SendEmail(string recipient, string subject, string body)
+{
+    // Magic code to send an email.
+}
+
+When you hover over a method call, you can view the complete summary description with proper sections. In the image below, you can see an example of me viewing the SendMessage() method. It displays the summary, returns, remarks, and exceptions tags information, providing a comprehensive overview of the method's purpose and behavior.
+
+
